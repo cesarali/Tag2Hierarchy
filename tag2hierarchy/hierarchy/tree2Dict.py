@@ -129,7 +129,6 @@ def setDictionary(nodes,initialDict,initialNames):
             for child in setDictionary(node.children,initialDict,initialNames):
                 yield child
                 
-
 def fillDictionary(nodes,initialDict0,initialNames0,initialDict,initialNames,joined,verbose=False):
     """
     Fills the dictionary by joining buttom up. 

@@ -73,8 +73,6 @@ def obtainDescendantsFromNode2(tree,nodeToStudy,verbose=False,cargo=False):
     """
     Obtain childrens and the childrens of the childrens of a given node
     
-    Returns either the list of cargo or the list of names
-    
     Returns:
     -------
     descendants: list of node names
@@ -85,9 +83,7 @@ def obtainDescendantsFromNode2(tree,nodeToStudy,verbose=False,cargo=False):
             if node.name == nodeToStudy:
                 if verbose == True:
                     print "Node found: "
-                subTree = [node]
-                if cargo:
-                    nodeToStudyCargo = node.cargo  
+                subTree = [node]  
         except:
             pass
     
@@ -99,10 +95,8 @@ def obtainDescendantsFromNode2(tree,nodeToStudy,verbose=False,cargo=False):
                 descendants.append(node.name)
         except:
             pass
-    if not cargo:
-        return set(descendants).difference(set([nodeToStudy]))
-    else:
-        return set(descendants).difference(set([nodeToStudyCargo]))
+    
+    return set(descendants).difference(set([nodeToStudy]))
     
 def obtainNodesPerLevel(tree):
     """
@@ -377,6 +371,7 @@ def descendantRankings(descendantsPN):
         numberOfDescendats.append((who_descendants[1], descendant))
     numberOfDescendats.sort()
     return numberOfDescendats[::-1]
+
 
 #=========================================
 # BASIC UTILS

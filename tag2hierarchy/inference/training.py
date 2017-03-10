@@ -5,8 +5,8 @@ Created on Mar 11, 2016
 '''
 
 from tag2hierarchy.datatypes.hierarchies import Node
-from tag2hierarchy.hierarchy.tuplesStatistics import cooccuranceBlock,nodesInTuples
-from tag2hierarchy.hierarchy.TupleGenerator import generateNTuples
+from tag2hierarchy.inference.tuplesStatistics import cooccuranceBlock,nodesInTuples
+from tag2hierarchy.inference.tupleGenerator import generateNTuples
 from tag2hierarchy.hierarchy.treeHandlers import nodeNames, setBranch, obtainDescendantsFromNode, obtainDescendantsFromNode2
 
 def initialize(tupleSet):
@@ -66,7 +66,11 @@ def obtainParentToDescendantsRatio(smallestNode,node,Block):
     for b in blockPlacesOfDescendants:
         if node.name in Block[b][1][1]:
             parentToDescendants += 1.
-    parentToDescendants = parentToDescendants/len(blockPlacesOfDescendants)
+    try:
+        parentToDescendants = parentToDescendants/len(blockPlacesOfDescendants)
+    except:
+        parentToDescendants = 0.
+        
     return  parentToDescendants
                 
 def obtainTreeNoise(tupleSet,parentToDescendantBound=0.4,verbose=False):

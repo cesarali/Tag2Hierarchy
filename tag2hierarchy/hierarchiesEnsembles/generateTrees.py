@@ -5,9 +5,9 @@ Created on Mar 11, 2016
 '''
 from tag2hierarchy.datatypes.hierarchies import Node  
 from tag2hierarchy.hierarchy.treeHandlers import transverseTree, setBranch
-from tag2hierarchy.hierarchy.TupleGenerator import generateNTuples
+from tag2hierarchy.inference.tupleGenerator import generateNTuples
 from tag2hierarchy.hierarchy.structureTest import purityFromGroundTruth
-from tag2hierarchy.hierarchy.training import obtainTreeNoise2
+from tag2hierarchy.inference.training import obtainTreeNoise2
 import numpy as np
 
 
