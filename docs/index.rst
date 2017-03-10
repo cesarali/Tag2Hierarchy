@@ -19,6 +19,8 @@ Contents:
 
    hierarchies
    generateTrees
+   objectTreeHandlers
+   
    
 
 
