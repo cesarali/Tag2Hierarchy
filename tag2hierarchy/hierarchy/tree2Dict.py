@@ -90,8 +90,11 @@ def fromDictTreeToObjectTree(dictTree,verbose=False):
     for a in setObjects(dictTree,Nodes):
         pass
     
+    
     readyNodes0 = startNodes(Nodes)
+    initialNodesLabels = len(readyNodes0)
     readyNodesStrings0 = [n.name for n in startNodes(Nodes)]
+    loop = 0
     
     while len(readyNodes0) > 0:
         readyNodes = []
@@ -104,6 +107,9 @@ def fromDictTreeToObjectTree(dictTree,verbose=False):
         readyNodesStrings0 = readyNodesStrings[:]
         if(len(readyNodes0) == 1):
             break
+        loop +=1
+        if loop > initialNodesLabels:
+            raise Exception("Nodes name might be repeated in the dictionary")
     return readyNodes0
     
 #===============================================================================

@@ -19,7 +19,7 @@ Contents:
 
    hierarchies
    generateTrees
-   objectTreeHandlers
+   treeHandlers
    
    
 

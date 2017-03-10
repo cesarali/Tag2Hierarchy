@@ -12,7 +12,7 @@ def transverseTree(tree):
     generator
     
     Parameters:
-    ----------
+
     tree: list of myTree objects
     
     """
@@ -35,9 +35,45 @@ def obtainBranch(tree,nodeToStudy):
     print "None not found"
     return None
 
+def obtainDescendantsFromNode(tree,nodeToStudy,verbose=False,cargo=False):
+    """
+    Obtain childrens and the childrens of the childrens of a given node
+    
+    Stores the name and cargo as a dictionary
+    
+    Returns:
+    
+    descendants: list of dictionaries
+    """
+    descendants = []
+    for node in transverseTree(tree):
+        try:
+            if node.name == nodeToStudy:
+                if verbose == True:
+                    print "Node found: "
+                subTree = [node]
+                if cargo:
+                    nodeToStudyCargo = {"name":node.name,"cargo":node.cargo}
+        except:
+            pass
+    for node in transverseTree(subTree):
+        try:
+            if cargo:
+                descendants.append({"name":node.name,"cargo":node.cargo})
+            else:
+                descendants.append(node.name)
+        except:
+            pass
+    if cargo:
+        return set(descendants).difference(nodeToStudyCargo)
+    else:
+        return set(descendants).difference(set([nodeToStudy])) 
+
 def obtainDescendantsFromNode2(tree,nodeToStudy,verbose=False,cargo=False):
     """
     Obtain childrens and the childrens of the childrens of a given node
+    
+    Returns either the list of cargo or the list of names
     
     Returns:
     -------
@@ -49,7 +85,9 @@ def obtainDescendantsFromNode2(tree,nodeToStudy,verbose=False,cargo=False):
             if node.name == nodeToStudy:
                 if verbose == True:
                     print "Node found: "
-                subTree = [node]  
+                subTree = [node]
+                if cargo:
+                    nodeToStudyCargo = node.cargo  
         except:
             pass
     
@@ -61,53 +99,24 @@ def obtainDescendantsFromNode2(tree,nodeToStudy,verbose=False,cargo=False):
                 descendants.append(node.name)
         except:
             pass
-    
-    return set(descendants).difference(set([nodeToStudy]))
-
-def obtainDescendantsFromNode(tree,nodeToStudy,verbose=False,cargo=False):
-    """
-    Obtain childrens and the childrens of the childrens of a given node
-    
-    Returns:
-    -------
-    descendants: list of node names
-    """
-    descendants = []
-    for node in transverseTree(tree):
-        try:
-            if node.name == nodeToStudy:
-                if verbose == True:
-                    print "Node found: "
-                subTree = [node]  
-        except:
-            pass
-    
-    for node in transverseTree(subTree):
-        try:
-            if cargo:
-                descendants.append({"name":node.name,"cargo":node.cargo})
-            else:
-                descendants.append(node.name)
-        except:
-            pass
-    if cargo:
-        return descendants
+    if not cargo:
+        return set(descendants).difference(set([nodeToStudy]))
     else:
-        return set(descendants).difference(set([nodeToStudy])) 
-
+        return set(descendants).difference(set([nodeToStudyCargo]))
+    
 def obtainNodesPerLevel(tree):
     """
     obtains all the nodes per level as a dictionary of list
     
     Parameters:
-    ----------
+
     tree: list of myTree objects
     nodeToStudy: string
     verbose: bool
     cargo: bool if set to true only cargo will be returned
     
     Return:
-    -------
+
     dictionary of list (if cargo True we return the list with just cargo)
         keys : levels, values: list with the nodes per level
     """
@@ -123,7 +132,7 @@ def obtainsNodesAtMyLevel(tree,nodeName,nodesPerLevel=None):
     
     tree: list of objects myTree
     node: myTree object
-    
+    nodesPerLevel: if ready from obtainNodesPerLevel 
     """
     node = obtainSubTree(tree, nodeName)
     myLevel = obtainMyLevel(node[0])
@@ -193,8 +202,16 @@ def obtainDescendantsPerLevel(tree,nodeToStudy=None,verbose=False,cargo=False):
     
 def obtainMyLevel(node):
     """
+    Requieres the branch to be  defined by setBranch
+    
+    
+    Returns:
+    level number (int)
     """
-    return len(node.myBranch) - 1
+    try:
+        return len(node.myBranch) - 1
+    except:
+        raise Exception("Branch not set")
     
 def obtainLeavesFromNode(allTrees,nodeToStudy,nodes=False,verbose=False):
     """
@@ -319,7 +336,51 @@ def modifyTree(tree,nodeNameToChange):
                 break
             for child in modifyTree(node.children,nodeNameToChange):
                 yield child
-                
+                           
+def nodeNames(tree):
+    """
+    Stores the tree names
+    
+    Parameters:
+
+    tree: list of myTree objects
+    
+    Returns:
+
+    names: list of strings
+    """
+    names = []
+    for node in transverseTree(tree):
+        names.append(node.name)
+    return names
+
+def obtainNodeCargo(tree,nodeName):
+    for node in transverseTree(tree):
+        if node.name == nodeName:
+            return node.cargo
+        
+def descendantsPerNode(tree):
+    """
+    """
+    names = nodeNames(tree)
+    descendantPerNode = {}
+    for name in names:
+        all_descendants = obtainDescendantsFromNode(tree,name)
+        descendantPerNode[name] = (all_descendants,len(all_descendants)) 
+    return descendantPerNode
+
+def descendantRankings(descendantsPN):
+    """
+    """
+    numberOfDescendats = []
+    for descendant,who_descendants in descendantsPN.iteritems():
+        numberOfDescendats.append((who_descendants[1], descendant))
+    numberOfDescendats.sort()
+    return numberOfDescendats[::-1]
+
+#=========================================
+# BASIC UTILS
+#=========================================
 def setBranch(nodes):
     """
     Modifies the tree by defining their branch UP
@@ -347,24 +408,7 @@ def setEmptyListToNone(tree):
                 node.children = None
         except:
             pass
-            
-def nodeNames(tree):
-    """
-    Stores the tree names
-    
-    Parameters:
-    ----------
-    tree: list of myTree objects
-    
-    Returns:
-    -------
-    names: list of strings
-    """
-    names = []
-    for node in transverseTree(tree):
-        names.append(node.name)
-    return names
-
+        
 def setOpenTreeDict(tree):
     """
     This function creates a list of myOpenTree objects 
@@ -377,39 +421,14 @@ def setOpenTreeDict(tree):
             openTreeDict[node.name] = [child.name for child in node.children]
         else:
             openTreeDict[node.name] = None
-            
     return openTreeDict
-
-def obtainNodeCargo(tree,nodeName):
-    for node in transverseTree(tree):
-        if node.name == nodeName:
-            return node.cargo
-        
-def descendantsPerNode(tree):
-    """
-    """
-    names = nodeNames(tree)
-    descendantPerNode = {}
-    for name in names:
-        all_descendants = obtainDescendantsFromNode(tree,name)
-        descendantPerNode[name] = (all_descendants,len(all_descendants)) 
-    return descendantPerNode
-
-def descendantRankings(descendantsPN):
-    """
-    """
-    numberOfDescendats = []
-    for descendant,who_descendants in descendantsPN.iteritems():
-        numberOfDescendats.append((who_descendants[1], descendant))
-    numberOfDescendats.sort()
-    return numberOfDescendats[::-1]
 
 def cutDownTree(oldTree,l):
     """
     This function cuts tree below that level
     
     Parameters
-    ----------
+
     
     oldTree
     l 

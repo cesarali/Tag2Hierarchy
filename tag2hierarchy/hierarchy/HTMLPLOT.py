@@ -3,7 +3,7 @@ Created on Mar 18, 2016
 
 @author: cesar
 '''
-from tag2hierarchy.hierarchy.TreeAsDict import fromObjectTreeToDictTree
+from tag2hierarchy.hierarchy.tree2Dict import fromObjectTreeToDictTree
 import json
 
 HTMLCODE1="""<!DOCTYPE html>

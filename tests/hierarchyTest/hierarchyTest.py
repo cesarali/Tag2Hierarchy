@@ -7,22 +7,23 @@ import unittest
 import matplotlib.pyplot as plt
 import json
 
-from tag2hierarchy.hierarchy import TreeAsDict, HTMLPLOT
-from tag2hierarchy.hierarchy import ObjectTreeHandlers
+from tag2hierarchy.hierarchy import HTMLPLOT
+from tag2hierarchy.hierarchy import tree2Dict
+from tag2hierarchy.hierarchy import treeHandlers
 
 class Test(unittest.TestCase):
     
     def jsonToTree(self):
         dictTree = json.load(open("../../data/myTree.json"))
-        objectTree = TreeAsDict.fromDictTreeToObjectTree([dictTree])
-        names = ObjectTreeHandlers.nodeNames(objectTree)
-        backDictTree = TreeAsDict.fromObjectTreeToDictTree(objectTree)        
+        objectTree = tree2Dict.fromDictTreeToObjectTree([dictTree])
+        names = treeHandlers.nodeNames(objectTree)
+        backDictTree = tree2Dict.fromObjectTreeToDictTree(objectTree)        
         print names
         print backDictTree[0]
     
     def jsonToHtml(self):
         dictTree = [{"name":"A","children":[{"name":"B","children":None},{"name":"C","children":None}]}]
-        objectTree = TreeAsDict.fromDictTreeToObjectTree(dictTree)
+        objectTree = tree2Dict.fromDictTreeToObjectTree(dictTree)
         HTMLPLOT.vizualizeObjectTree("../../visualization/",objectTree, "twoNodes")
     
     

@@ -4,7 +4,7 @@ Created on Mar 11, 2016
 @author: cesar
 '''
 from tag2hierarchy.datatypes.hierarchies import Node  
-from tag2hierarchy.hierarchy.ObjectTreeHandlers import transverseTree, setBranch
+from tag2hierarchy.hierarchy.treeHandlers import transverseTree, setBranch
 from tag2hierarchy.hierarchy.TupleGenerator import generateNTuples
 from tag2hierarchy.hierarchy.structureTest import purityFromGroundTruth
 from tag2hierarchy.hierarchy.training import obtainTreeNoise2

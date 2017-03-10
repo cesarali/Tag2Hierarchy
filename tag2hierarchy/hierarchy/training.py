@@ -7,7 +7,7 @@ Created on Mar 11, 2016
 from tag2hierarchy.datatypes.hierarchies import Node
 from tag2hierarchy.hierarchy.tuplesStatistics import cooccuranceBlock,nodesInTuples
 from tag2hierarchy.hierarchy.TupleGenerator import generateNTuples
-from tag2hierarchy.hierarchy.ObjectTreeHandlers import nodeNames, setBranch, obtainDescendantsFromNode, obtainDescendantsFromNode2
+from tag2hierarchy.hierarchy.treeHandlers import nodeNames, setBranch, obtainDescendantsFromNode, obtainDescendantsFromNode2
 
 def initialize(tupleSet):
     """

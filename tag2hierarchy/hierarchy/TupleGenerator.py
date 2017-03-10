@@ -4,8 +4,8 @@ Created on Mar 11, 2016
 @author: cesar
 '''
 from random import choice,sample
-from tag2hierarchy.hierarchy.ObjectTreeHandlers import nodeNames, transverseTree
-from tag2hierarchy.hierarchy import ObjectTreeHandlers
+from tag2hierarchy.hierarchy.treeHandlers import nodeNames, transverseTree
+from tag2hierarchy.hierarchy import treeHandlers
 import numpy as np
 import copy
 
@@ -57,7 +57,7 @@ def generateNTuples(tree,numberOfTuples,nFunction=randomSize,
     --------
     tupleList
     """
-    nodesPerLevel = ObjectTreeHandlers.obtainNodesPerLevel(tree)
+    nodesPerLevel = treeHandlers.obtainNodesPerLevel(tree)
     namesList = nodeNames(tree)
     ntuples = []
     for ik in range(numberOfTuples):
@@ -68,7 +68,7 @@ def generateNTuples(tree,numberOfTuples,nFunction=randomSize,
             print "Node Selected ",selectedNode
             
         for node in transverseTree(tree):
-            myLevel = ObjectTreeHandlers.obtainMyLevel(node)
+            myLevel = treeHandlers.obtainMyLevel(node)
             if node.name == selectedNode:
                 if verbose:
                     print "Tuple from branch"
@@ -81,7 +81,7 @@ def generateNTuples(tree,numberOfTuples,nFunction=randomSize,
                             whoToTake.extend(mySiblings)
                     if horizontalMixing[0]:
                         if np.random.rand() < horizontalMixing[1]:
-                            neigh= ObjectTreeHandlers.obtainsNodesAtMyLevel(tree, node.name, nodesPerLevel)
+                            neigh= treeHandlers.obtainsNodesAtMyLevel(tree, node.name, nodesPerLevel)
                             whichNeigh = sample(neigh,min(len(neigh,horizontalMixing[2])))
                             whoToTake.extend(whichNeigh)
                     if withNoise[0]:
