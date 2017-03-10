@@ -5,10 +5,8 @@ Created on May 25, 2016
 '''
 import json
 import sys
-
 from tag2hierarchy.hierarchy.ObjectTreeHandlers import transverseTree, nodeNames, obtainLeavesFromNode, obtainNonLeaves
 import numpy as np
-
 
 def purityFromGroundTruth(groundTree, trainedTree, verbose=False):
     """

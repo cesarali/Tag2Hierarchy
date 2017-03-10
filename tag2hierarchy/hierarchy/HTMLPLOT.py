@@ -17,7 +17,7 @@ HTMLCODE1="""<!DOCTYPE html>
 }
 
 .node {
-  font: 5px sans-serif;
+  font: 12px sans-serif;
 }
 
 .link {
@@ -256,9 +256,9 @@ function click(d) {
 </script>
 """
 
-def vizualizeObjectTree(objectTree=None,plotName="objectTree",whereToPlot="../visualization/",dynamic=False):
+def vizualizeObjectTree(whereToPlot,objectTree=None,plotName="objectTree",dynamic=False):
     """
-    prints the json file as welll as the 
+    prints the json file as well as the 
     html file for vizualize the object tree
     
     Parameters:
@@ -266,7 +266,6 @@ def vizualizeObjectTree(objectTree=None,plotName="objectTree",whereToPlot="../vi
     objectTree:
     whereToPlot: directory where to plot the json and htm
     """
-    
     if(dynamic):
         dictTree = fromObjectTreeToDictTree(objectTree)
         if( len(dictTree)  > 1):

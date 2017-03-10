@@ -388,13 +388,11 @@ def obtainNodeCargo(tree,nodeName):
 def descendantsPerNode(tree):
     """
     """
-    
     names = nodeNames(tree)
     descendantPerNode = {}
     for name in names:
         all_descendants = obtainDescendantsFromNode(tree,name)
-        descendantPerNode[name] = (all_descendants,len(all_descendants))
-        
+        descendantPerNode[name] = (all_descendants,len(all_descendants)) 
     return descendantPerNode
 
 def descendantRankings(descendantsPN):
@@ -405,7 +403,6 @@ def descendantRankings(descendantsPN):
         numberOfDescendats.append((who_descendants[1], descendant))
     numberOfDescendats.sort()
     return numberOfDescendats[::-1]
-
 
 def cutDownTree(oldTree,l):
     """

@@ -43,7 +43,3 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
-
-# Eclipse 
-.project
-.pydevproject

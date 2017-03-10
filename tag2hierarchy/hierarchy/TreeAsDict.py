@@ -4,6 +4,7 @@ Created on Mar 11, 2016
 @author: cesar
 '''
 from tag2hierarchy.datatypes.hierarchies import Node
+from statsmodels.sandbox.distributions.sppatch import expect
 
 
 #===============================================================================
@@ -82,6 +83,9 @@ def fromDictTreeToObjectTree(dictTree,verbose=False):
     --------
     readyNodes0: list of Node objects
     """
+    if type(dictTree) != list:
+        raise Exception("The tree object most be a list of dictionaries") 
+    
     Nodes = []
     for a in setObjects(dictTree,Nodes):
         pass
