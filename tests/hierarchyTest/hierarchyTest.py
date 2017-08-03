@@ -4,8 +4,8 @@ Created on Mar 10, 2017
 @author: cesar
 '''
 import unittest
-import matplotlib.pyplot as plt
 import json
+import matplotlib.pyplot as plt
 
 from tag2hierarchy.hierarchy import HTMLPLOT
 from tag2hierarchy.hierarchy import tree2Dict

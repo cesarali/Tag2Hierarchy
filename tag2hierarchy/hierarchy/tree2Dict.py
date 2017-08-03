@@ -4,7 +4,6 @@ Created on Mar 11, 2016
 @author: cesar
 '''
 from tag2hierarchy.datatypes.hierarchies import Node
-from statsmodels.sandbox.distributions.sppatch import expect
 
 
 #===============================================================================
