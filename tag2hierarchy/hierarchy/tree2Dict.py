@@ -164,7 +164,7 @@ def fillDictionary(nodes,initialDict0,initialNames0,initialDict,initialNames,joi
             for child in fillDictionary(node.children,initialDict0,initialNames0,initialDict,initialNames,joined,verbose):
                 yield child
                 
-def fromObjectTreeToDictTree(objectTree,verbose=False):
+def fromObjectTreeToDictTree(objectTree0,verbose=False):
     """
     Parameters:
     ----------
@@ -176,21 +176,45 @@ def fromObjectTreeToDictTree(objectTree,verbose=False):
         which possees the strcuture {"name":string,"children":(again list of the same dictionaries)}
         if the node is a leaf children:None
     """
-    initialDict0 = []
-    initialNames0 = []
-    for a in setDictionary(objectTree,initialDict0,initialNames0):
-        pass
-    
-    while len(initialDict0) > 0:
-        joined = []
-        initialDict = []
-        initialNames = []
-        for a in fillDictionary(objectTree,initialDict0,initialNames0,initialDict,initialNames,joined,verbose):
+    if len(objectTree0) == 1:
+        initialDict0 = []
+        initialNames0 = []
+        for a in setDictionary(objectTree0,initialDict0,initialNames0):
             pass
-        initialDict0 = initialDict[:]
-        initialNames0 = initialNames[:]
         
-        if(len(initialDict) == 1):
-            break
-        
-    return initialDict
+        while len(initialDict0) > 0:
+            joined = []
+            initialDict = []
+            initialNames = []
+            for a in fillDictionary(objectTree0,initialDict0,initialNames0,initialDict,initialNames,joined,verbose):
+                pass
+            initialDict0 = initialDict[:]
+            initialNames0 = initialNames[:]
+            
+            if(len(initialDict) == 1):
+                break
+            
+        return initialDict
+    else:
+        finalDict = []
+        for node in objectTree0:
+            objectTree = [node] 
+            initialDict0 = []
+            initialNames0 = []
+            for a in setDictionary(objectTree,initialDict0,initialNames0):
+                pass
+            
+            while len(initialDict0) > 0:
+                joined = []
+                initialDict = []
+                initialNames = []
+                for a in fillDictionary(objectTree,initialDict0,initialNames0,initialDict,initialNames,joined,verbose):
+                    pass
+                initialDict0 = initialDict[:]
+                initialNames0 = initialNames[:]
+                
+                if(len(initialDict) == 1):
+                    break
+            finalDict.append(initialDict)
+            
+        return finalDict

@@ -5,6 +5,8 @@ Created on Mar 18, 2016
 '''
 from tag2hierarchy.hierarchy.tree2Dict import fromObjectTreeToDictTree
 import json
+import os
+import shutil
 
 HTMLCODE1="""<!DOCTYPE html>
 <meta charset="utf-8">
@@ -256,7 +258,7 @@ function click(d) {
 </script>
 """
 
-def vizualizeObjectTree(whereToPlot,objectTree=None,plotName="objectTree",dynamic=False):
+def vizualizeObjectTree(whereToPlot,objectTree=None,plotName="objectTree",dynamic=False,delete_folder=False):
     """
     prints the json file as well as the 
     html file for vizualize the object tree
@@ -266,18 +268,26 @@ def vizualizeObjectTree(whereToPlot,objectTree=None,plotName="objectTree",dynami
     objectTree:
     whereToPlot: directory where to plot the json and htm
     """
+    #make sure folder for output is ready
+    if not os.path.exists(whereToPlot):
+        os.makedirs(whereToPlot)
+    else:
+        if delete_folder:
+            shutil.rmtree(whereToPlot)
+            os.makedirs(whereToPlot)
+        else:
+            print "Branching Directory Exists"
+            
     if(dynamic):
         dictTree = fromObjectTreeToDictTree(objectTree)
-        if( len(dictTree)  > 1):
-            print "DICT TREE POSSES DIFFERENT ROOTS, PRINTHING ROOT 0!"
-        json.dump(dictTree[0], open(whereToPlot+plotName+".json","w"))
-        open(whereToPlot+plotName+".html","w").write(HTMLCODE21+"\""+plotName+".json\""+HTMLCODE22)
+        for inmigrant in dictTree:    
+            json.dump(inmigrant[0], open(whereToPlot+plotName+"_{0}_".format(str(inmigrant[0]["name"]))+".json","w"))
+            open(whereToPlot+plotName+"_{0}_".format(str(inmigrant[0]["name"]))+".html","w").write(HTMLCODE21+"\""+plotName+"_{0}_".format(str(inmigrant[0]["name"]))+".json\""+HTMLCODE22)
     else:
         dictTree = fromObjectTreeToDictTree(objectTree)
-        if( len(dictTree)  > 1):
-            print "DICT TREE POSSES DIFFERENT ROOTS, PRINTHING ROOT 0!"
-        json.dump(dictTree[0], open(whereToPlot+plotName+".json","w"))
-        open(whereToPlot+plotName+".html","w").write(HTMLCODE1+"\""+plotName+".json\""+HTMLCODE2)
+        for inmigrant in dictTree:  
+            json.dump(inmigrant[0], open(whereToPlot+plotName+"_{0}_".format(str(inmigrant[0]["name"]))+".json","w"))
+            open(whereToPlot+plotName+"_{0}_".format(str(inmigrant[0]["name"]))+".html","w").write(HTMLCODE1+"\""+plotName+"_{0}_".format(str(inmigrant[0]["name"]))+".json\""+HTMLCODE2)
 
     
     
